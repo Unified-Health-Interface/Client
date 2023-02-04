@@ -65,6 +65,107 @@ engine.say("Welcome to Unified Healthcare Interface. Your virtual assistant is c
 engine.runAndWait()
 
 
+def generate_test_data(username):
+    requests.post(f"{API_SERVER_URL}/allergy/", json={
+        'allergy': 'peanuts',
+        'username': username
+    })
+
+    requests.post(f"{API_SERVER_URL}/allergy/", json={
+        'allergy': 'milk',
+        'username': username
+    })
+
+    requests.post(f"{API_SERVER_URL}/allergy/", json={
+        'allergy': 'pollen',
+        'username': username
+    })
+
+    # Vaccinations
+
+    requests.post(f"{API_SERVER_URL}/vaccination/", json={
+        'vaccine': 'influenza',
+        'date_time': '2023-02-04 17:45:00',
+        'done': False,
+        'username': username,
+    })
+
+    requests.post(f"{API_SERVER_URL}/vaccination/", json={
+        'vaccine': 'DDT',
+        'date_time': '2023-03-07 11:30:00',
+        'done': False,
+        'username': username,
+    })
+
+    # Appointments
+
+    requests.post(f"{API_SERVER_URL}/appointment/", json={
+        'doctor': 'Dr Manas',
+        'hospital': 'Manipal Hospital',
+        'date_time': '2023-02-04 14:00:00',
+        'username': username,
+    })
+
+    requests.post(f"{API_SERVER_URL}/appointment/", json={
+        'doctor': 'Dr Govind',
+        'hospital': 'Chinmaya Mission Hospital',
+        'date_time': '2023-02-04 21:15:00',
+        'username': username,
+    })
+
+    # Doctors Notes
+
+    requests.post(f"{API_SERVER_URL}/doctor-note/", json={
+        'doctor': 'Dr Varun',
+        'note': 'Your lungs are responding well to the treatment. However, you need to stay away from highly polluted areas.',
+        'username': username,
+    })
+
+    requests.post(f"{API_SERVER_URL}/doctor-note/", json={
+        'doctor': 'Dr Sanjay',
+        'note': 'The fracture you suffered 2 months ago is almost fully healed, and you are safe to return to your everyday activities.',
+        'username': username,
+    })
+
+    # Prescriptions
+
+    requests.post(f"{API_SERVER_URL}/prescription/", json={
+        'doctor': 'Dr Nikhil',
+        'medicines': 'Crocin',
+        'date_time': '2023-01-23 08:30:00',
+        'done': False,
+        'username': username,
+    })
+
+    requests.post(f"{API_SERVER_URL}/prescription/", json={
+        'doctor': 'Dr Ishaan',
+        'medicines': 'Paracetamol',
+        'date_time': '2023-01-29 21:00:00',
+        'done': False,
+        'username': username,
+    })
+
+    # Bills
+
+    requests.post(f"{API_SERVER_URL}/bill/", json={
+        'hospital': 'Manipal Hospital',
+        'service': 'ICU',
+        'amount': 50000,
+        'due_date': '2023-02-11',
+        'paid': False,
+        'username': username,
+    })
+
+    requests.post(f"{API_SERVER_URL}/bill/", json={
+        'hospital': 'Chinmaya Mission Hospital',
+        'service': 'lung disease treatment',
+        'amount': 25000,
+        'due_date': '2023-02-19',
+        'paid': False,
+        'username': username,
+    })
+
+
 def setup_new_user():
     engine.say("Welcome, new user! I will guide you through the setup process.")
     engine.runAndWait()
@@ -144,8 +245,6 @@ def setup_new_user():
         'endpoint': endpoint
     })
 
-    input()
-
     os.system('clear')
     console.print(BANNER)
 
@@ -191,6 +290,7 @@ def setup_new_user():
     write_config(username)
 
     input()
+    generate_test_data(username)
 
     engine.say(
         "Received scanned hospital records data from the Unified Health Interface mobile app. Processing complete!")
